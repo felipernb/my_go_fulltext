@@ -5,31 +5,16 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"container/list"
+	"./indexer"
 )
 
-type Indexer struct {
-	dictionary map[string]*list.List
-}
-
-func NewIndexer() {
-	indexer := new(Indexer)
-	indexer.dictionary = make(map[string]*list.List)
-}
-
-func (indexer *Indexer) add(ref int, content string) {		
-}
-
-func (indexer *Indexer) search(query string) *list.List {
-	return indexer.dictionary[query]
-}
+var index = indexer.New()
+var files []string
 
 func initialize() {
 	flag.Parse();
 
-	files := make([]string,flag.NArg())
-	contents := make([]string, flag.NArg())
-	index := NewIndexer()
+	files = make([]string,flag.NArg())
 
 	fmt.Printf("Indexing %d files...\n", flag.NArg())
 	for i := 0; i < flag.NArg(); i++ {
@@ -44,13 +29,16 @@ func initialize() {
 		fmt.Printf("OK! %d/%d\n", i+1, flag.NArg())
 
 		files[i] = flag.Arg(i)
-		contents[i] = string(content)
-
+		index.Add(i, string(content))
 	}
-	index.index(contents)
 
 }
 
 func main() {
 	initialize();
+	
+	results := index.Search("package")
+	for e := results.Front(); e != nil; e = e.Next() {
+		fmt.Printf("%s\n",files[e.Value])
+	}
 }
