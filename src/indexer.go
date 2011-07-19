@@ -70,7 +70,7 @@ func (indexer *Indexer) Search(query string) map[int] *list.List {
 }
 
 /*
- *   Makes separate queries for each token and than calculates the intersection
+ *   Makes separate queries for each token and then calculates the intersection
  */
 func (indexer *Indexer) multiSearch(subqueries []string) map[int] *list.List {
 	tempResults := make(map[string] map[int] *list.List)
