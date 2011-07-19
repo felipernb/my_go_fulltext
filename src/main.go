@@ -32,7 +32,7 @@ func initialize() {
 		content, e := ioutil.ReadFile(flag.Arg(i))
 		
 		if e != nil {
-			fmt.Printf("FAIL! %s couldn't be open.", flag.Arg(i))
+			fmt.Printf("FAIL! %s couldn't be open.\n", flag.Arg(i))
 			os.Exit(1)
 		}
 		
